@@ -4,35 +4,82 @@
     "description": "Switch between alternative files quickly",
     "version": "0.0.1",
     "publisher": "generalov",
+    "license": "SEE LICENSE IN LICENSE",
     "engines": {
         "vscode": "^1.14.0"
     },
+    "keywords": [
+        "switch",
+        "alternative",
+        "editor",
+        "test"
+    ],
     "categories": [
         "Other"
     ],
+    "icon": "images/icon.png",
+    "galleryBanner": {
+        "color": "#ffffff",
+        "theme": "light"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/generalov/file-switcher-vscode.git"
+    },
+    "bugs": {
+        "url": "https://github.com/generalov/file-switcher-vscode/issues",
+        "email": "e.generalov@gmail.com"
+    },
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:file-switcher.showAlternativeFiles"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "file-switcher.showAlternativeFiles",
+                "title": "Show Alternative Files"
             }
-        ]
+        ],
+        "keybindings": [
+            {
+                "key": "Alt+Shift+A",
+                "command": "file-switcher.showAlternativeFiles",
+                "when": "editorTextFocus"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Open in External Editor configuration",
+            "properties": {
+                "file-switcher.rules": {
+                    "type": [
+                        "object",
+                        null
+                    ]
+                }
+            }
+        }
     },
     "scripts": {
-        "vscode:prepublish": "tsc -p ./",
+        "vscode:prepublish": "tsc -p ./ && npm run changelog",
         "compile": "tsc -watch -p ./",
+        "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+        "release": "vsce publish patch",
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
         "typescript": "^2.0.3",
         "vscode": "^1.0.0",
+        "cz-conventional-changelog": "^2.0.0",
         "mocha": "^2.3.3",
         "@types/node": "^6.0.40",
         "@types/mocha": "^2.2.32"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     }
 }
